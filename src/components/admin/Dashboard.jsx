@@ -38,8 +38,6 @@ const Dashboard = () => {
   const fetchData = async () => {
     try {
       const { data } = await Axios.get("/admin/dateorders");
-      console.log(data);
-
       const monthNames = [
         "Jan",
         "Feb",
@@ -56,8 +54,8 @@ const Dashboard = () => {
       ];
 
       // Transform the input data into the desired format
-      const ser = data.map((item) => item.count);
-      const categories = data.map((item) => monthNames[item.month - 1]);
+      const ser = data?.map((item) => item.count);
+      const categories = data?.map((item) => monthNames[item.month - 1]);
       setSeries(ser);
       setMonth(categories);
     } catch (err) {
@@ -66,8 +64,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchData();
-    dispatch(asynsingleshopproducts(user._id));
+    if(user){
+      fetchData();
+    }
+    dispatch(asynsingleshopproducts(user?._id));
   }, []);
 
   useEffect(() => {

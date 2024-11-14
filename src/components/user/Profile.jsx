@@ -47,13 +47,13 @@ const Profile = () => {
       area: area,
       city: city,
       pincode: pincode,
-      landmark:landmark,
+      landmark: landmark,
     };
     // Send POST request to the server
     Axios.put("/profileupdate", userSchema)
       .then((response) => {
-        if(response.data.user){
-          notify("Profile Updated")
+        if (response.data.user) {
+          notify("Profile Updated");
         }
       })
       .catch((error) => {
@@ -119,7 +119,6 @@ const Profile = () => {
               <input
                 type="text"
                 placeholder="Username"
-                
                 defaultValue={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -128,7 +127,6 @@ const Profile = () => {
               <label>House No.</label>
               <input
                 type="text"
-                   
                 placeholder="House No."
                 defaultValue={house_no}
                 onChange={(e) => setHouse_no(e.target.value)}
@@ -138,7 +136,6 @@ const Profile = () => {
               <label>Area</label>
               <input
                 type="text"
-                   
                 placeholder="Area"
                 defaultValue={area}
                 onChange={(e) => setArea(e.target.value)}
@@ -149,7 +146,6 @@ const Profile = () => {
               <input
                 type="text"
                 placeholder="Landmark"
-                   
                 defaultValue={landmark}
                 onChange={(e) => setLandmark(e.target.value)}
               />
@@ -158,7 +154,6 @@ const Profile = () => {
               <label>City/Town</label>
               <input
                 type="text"
-                   
                 placeholder="State/Region"
                 defaultValue={city}
                 onChange={(e) => setCity(e.target.value)}
@@ -169,7 +164,6 @@ const Profile = () => {
               <input
                 type="number"
                 placeholder="Pincode"
-                   
                 defaultValue={pincode}
                 onChange={(e) => setPincode(e.target.value)}
               />

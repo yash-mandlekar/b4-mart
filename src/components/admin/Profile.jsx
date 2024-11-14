@@ -1,14 +1,99 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../Css/AdminProfile.css";
 import { useDispatch, useSelector } from "react-redux";
+import Axios from "../../Axios";
+import { asyncupdateprofile } from "../../store/userActions";
+import { notify } from "../common/Toast";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase-config";
 const Profile = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const fileref = useRef(null);
+  // Use state for form inputs, initialized with existing user data
+  const [username, setUsername] = useState(user?.username || "");
+  const [house_no, setHouse_no] = useState(user?.house_no || "");
+  const [area, setArea] = useState(user?.area || "");
+  const [city, setCity] = useState(user?.city || "");
+  const [pincode, setPincode] = useState(user?.pincode || "");
+  const [landmark, setLandmark] = useState(user?.landmark || "");
+  const [contact, setContact] = useState(user?.contact || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [url, seturl] = useState(null);
 
+  // Update state when user changes
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username);
+      setHouse_no(user.house_no);
+      setArea(user.area);
+      setCity(user.city);
+      setPincode(user.pincode);
+      setLandmark(user.landmark);
+    }
+  }, [user]);
+  useEffect(() => {
+    if (url) {
+      dispatch(asyncupdateprofile(url));
+    }
+  }, [url]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userSchema = {
+      username: username,
+      house_no: house_no,
+      area: area,
+      city: city,
+      pincode: pincode,
+      landmark: landmark,
+      contact: contact,
+      email: email,
+    };
+    // Send POST request to the server
+    Axios.put("/profileupdate", userSchema)
+      .then((response) => {
+        if (response.data.user) {
+          notify("Profile Updated");
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error updating the profile!", error);
+      });
+  };
+  const uploadFile = async (event) => {
+    if (!event.target.files[0]) return;
+    if (
+      !["jpg", "jpeg", "png"].includes(event.target.files[0].type.split("/")[1])
+    )
+      return notify("image type is not valid");
+
+    try {
+      notify("Uploading...");
+      const imageRef = ref(storage, `users/${event.target.files[0].name}`);
+      await uploadBytes(imageRef, event.target.files[0]);
+      const url = await getDownloadURL(imageRef);
+      seturl(url);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="admin-profile-container">
       <div className="admin-header flex">
         <div className="admin-profilepic">
-          <img src={user?.profilepic} alt="" />
+          <img
+            src={url ? url : user?.profilepic}
+            alt=""
+            onClick={() => fileref.current.click()}
+          />
+          <input
+            className="profile-pic-input"
+            ref={fileref}
+            type="file"
+            accept="image/*"
+            onChange={uploadFile}
+          />
         </div>
         <div className="admin-username flex column">
           <div className="username">Welcome, {user?.username}</div>
@@ -18,10 +103,10 @@ const Profile = () => {
         </div>
       </div>
       <div className="admin-details flex main-detail-cnt">
-        <div className="main-detail">Your Products : 0</div>
-        <div className="main-detail">Your Orders : 0</div>
+        <div className="main-detail">Your Products : {user?.products.length}</div>
+        <div className="main-detail">Your Orders : {user?.shoporders.length}</div>
       </div>
-      <form className="admin-details flex column">
+      <form className="admin-details flex column" onSubmit={handleSubmit}>
         <div className="detail-head">
           <span>Edit Profile</span>
           <button>Save</button>
@@ -31,42 +116,42 @@ const Profile = () => {
             <div className="inp-cnt flex column">
               <label htmlFor="">Username</label>
               <input
-                value={user?.username}
-                defaultValue={user?.Username}
+                defaultValue={username}
                 placeholder="Username"
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="inp-cnt flex column">
               <label htmlFor="">Contact</label>
               <input
-                defaultValue={user?.contact}
+                value={contact}
+                readOnly
                 placeholder="Contact"
                 type="text"
                 name=""
-                id=""
+                // onChange={(e) => setContact(e.target.value)}
               />
             </div>
             <div className="inp-cnt flex column">
               <label htmlFor="">Email</label>
               <input
-                defaultValue={user?.email}
+                defaultValue={email}
                 placeholder="Email"
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="inp-cnt flex column">
               <label htmlFor="">Pin Code</label>
               <input
-                defaultValue={user?.pincode}
+                defaultValue={pincode}
                 placeholder="Pin Code"
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setPincode(e.target.value)}
               />
             </div>
           </div>
@@ -74,41 +159,41 @@ const Profile = () => {
             <div className="inp-cnt flex column">
               <label htmlFor="">House no.</label>
               <input
-                defaultValue={user?.house_no}
+                defaultValue={house_no}
                 placeholder="House no."
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setHouse_no(e.target.value)}
               />
             </div>
             <div className="inp-cnt flex column">
               <label htmlFor="">Area</label>
               <input
-                defaultValue={user?.area}
+                defaultValue={area}
                 placeholder="Area"
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setArea(e.target.value)}
               />
             </div>
             <div className="inp-cnt flex column">
               <label htmlFor="">Landmark</label>
               <input
-                defaultValue={user?.landmark}
+                defaultValue={landmark}
                 placeholder="Landmark"
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setLandmark(e.target.value)}
               />
             </div>
             <div className="inp-cnt flex column">
               <label htmlFor="">City</label>
               <input
-                defaultValue={user?.city}
+                defaultValue={city}
                 placeholder="City"
                 type="text"
                 name=""
-                id=""
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
           </div>
