@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+.covermain {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+  overflow-y: scroll;
+}
+.productManagement {
+  width: 100%;
+  margin: auto;
+  overflow: auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.productManagement__title,
+.productManagement__listTitle {
+  color: #333;
+}
+
+.productManagement__form {
+  display: flex;
+  flex-direction: column;
+}
+.productManagement__form img {
+  width: 19%;
+  margin: 0 0.5vmax 0 0;
+}
+.productManagement__input,
+.productManagement__textarea,
+.productManagement__select {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.productManagement__textarea {
+  resize: vertical;
+}
+
+.productManagement__button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.productManagement__button:hover {
+  background-color: #45a049;
+}
+
+.productManagement__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.productManagement__tableHeader {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+.productManagement__tableData {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.productManagement__image {
+  border-radius: 5px;
+}
+@media (max-width: 921px) {
+  .covermain {
+    padding-left: 0;
+  }
+}

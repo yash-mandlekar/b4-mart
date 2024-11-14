@@ -1,0 +1,76 @@
+/* Admin Profile Container */
+.admin-profile-container {
+  width: 80%;
+  background-color: #ffffff;
+  border-radius: 34px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Admin Header Section */
+.admin-profile-container .flex {
+  display: flex;
+}
+.admin-profile-container .column {
+  flex-direction: column;
+}
+.admin-header {
+  align-items: center;
+  gap: 1vmax;
+}
+.admin-username {
+  gap: 5px;
+}
+.admin-username .username{
+  font-size: 30px;
+}
+.admin-username .role{
+  color: grey;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+.admin-profilepic {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  overflow: hidden;
+}
+.admin-profilepic img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.admin-details{
+  margin: 20px 0 0 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(125, 125, 125, 0.409);
+  gap: 10px;
+}
+.detail-head{
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(69, 69, 69, 0.468);
+  letter-spacing: 1px;
+}
+.details-cnt{
+  gap: 10px;
+  justify-content: space-between;
+}
+.cnt{
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  gap: 20px;
+}
+.inp-cnt{
+  gap: 5px;
+}
+.inp-cnt,.inp-cnt input{
+  font-size: 14px;
+}
+.inp-cnt input{
+  padding: 10px;
+}
+.main-detail{
+  font-size: 24px;
+}

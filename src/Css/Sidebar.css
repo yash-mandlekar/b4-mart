@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+.holo {
+  background-color: white;
+  height: fit-content;
+  height: 100%;
+}
+.creature {
+  width: 100%;
+  padding: 13px 11px;
+  border-radius: 8px;
+}
+.curd {
+  display: flex;
+  padding: 0px 6px;
+  align-items: center;
+  gap: 1vmax;
+}
+.creature h3 {
+  color: black;
+  font-size: 1.5vmax;
+  font-weight: 500;
+}
+.creature img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.sidebar {
+  height: 100%;
+  /* border-right: 1px solid rgb(107, 104, 104); */
+  background-color: #f2f2f2;
+  border-radius: 34px;
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 20px 4vmax;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+}
+
+.top-nav .logo {
+  width: 50px;
+  height: 50px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+.bottomBor {
+  border-bottom: 1px solid white;
+}
+
+.sidebar-menu li {
+  width: 100%;
+  padding: 1vmax 0vmax;
+  /* border-top: 1px solid black; */
+}
+
+.sidebar-menu li:hover {
+  background-color: white;
+}
+.sidebar-menu li:active {
+  background-color: #967bf8;
+}
+
+.sidebar-menu a {
+  text-decoration: none;
+  color: black;
+  padding: 0rem 0.5rem;
+  font-size: 1rem;
+  display: flex;
+  gap: 1vmax;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.sidebar-footer .side-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1vmax;
+  margin-bottom: 10px;
+  border-top: 1px solid black;
+  color: black;
+  padding: 1vmax 0.5rem;
+  text-decoration: none;
+}
+
+.sidebar-footer .icon {
+  margin-right: 10px;
+}
+
+/* Toggle button */
+.toggle-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #333;
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000;
+  display: none;
+}
+
+/* Sidebar closed state on mobile */
+.sidebar {
+  transform: translateX(0);
+}
+
+@media (max-width: 960px) {
+  /* On smaller screens, initially hide the sidebar */
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Show toggle button on mobile */
+  .toggle-button {
+    display: block;
+  }
+}

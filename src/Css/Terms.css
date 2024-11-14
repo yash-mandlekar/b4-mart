@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.title h1{
+    font-size: 40px;
+}
+.main_container{
+    margin-top: 10px;
+    margin-left:19%;
+    margin-right:13%;
+    padding-bottom: 20px;
+}
+.main_container p{
+    font-size:20px;
+    gap:5px;
+}
+.discription li {
+    font-size:20px;
+    
+    margin-left: 20px;
+}
+.addistionl{
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+}
+.addistionl p{
+    font-size: 15px;
+}

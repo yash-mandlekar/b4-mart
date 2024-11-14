@@ -1,0 +1,155 @@
+.item {
+  width: 90vw;
+  height: fit-content;
+  padding-top: 3vh;
+  padding-left: 3vw;
+}
+.itemContainer {
+  border-radius: 20px;
+  padding: 1px;
+  overflow: hidden;
+  width: 100%;
+  height: fit-content;
+  /* border: 1px solid black; */
+  display: flex;
+  /* align-items: center; */
+  background-color: white;
+}
+
+.specification {
+  color: #747474;
+  margin-top: -1vmax;
+}
+h4 {
+  color: #747474;
+}
+.itemInfo {
+  width: 50%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 1vmax;
+  padding: 1vmax;
+  height: fit-content;
+}
+.priceOverlap {
+  width: 50%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2vmax;
+}
+.itemInfo h2 {
+  font-weight: 500;
+}
+.itemPhoto {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.slider-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.slider-btn.prev {
+  left: 10px;
+}
+
+.slider-btn.next {
+  right: 10px;
+}
+.itemPhoto img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.button {
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 7px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  /* border: 1px solid #34974d; */
+  background-color: black;
+}
+
+
+.button__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.svg {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+}
+
+
+.button:active .button__icon {
+  background-color: #2e8644;
+}
+
+.button:active {
+  border: 1px solid #2e8644;
+}
+
+@media screen and (max-width: 430px) {
+  .item {
+    width: 100vw;
+    padding-left: 0;
+  }
+  .itemContainer {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+  }
+  .itemPhoto {
+    width: 100%;
+    height: fit-content;
+    border-right: 1px solid rgba(57, 57, 57, 0.215);
+  }
+  .priceOverlap {
+    width: 100%;
+  }
+  .itemInfo {
+    width: 100%;
+  }
+  .singleButton{
+    width: 40%;
+  }
+}

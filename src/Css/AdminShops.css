@@ -1,0 +1,79 @@
+::-webkit-scrollbar {
+  display: none;
+}
+.shop-table-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 34px;
+}
+.shopCtr {
+  width: 100%;
+}
+.add-shop-form {
+  margin-bottom: 20px;
+  margin-top: 1vmax;
+}
+
+.add-shop-form input {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-shop-form button {
+  padding: 10px 20px;
+  background-color: #1cb07a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.shop-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.shop-table th,
+.shop-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.shop-table th {
+  background-color: black;
+  color: white;
+}
+
+.shop-table td button {
+  padding: 7px 13px;
+  background-color: #ea2533;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.shop-table td button:hover {
+  background-color: #d6000f;
+}
+
+.shop-dp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 960px) {
+  .shop-table-container {
+    padding: 10vmax 20px 20px 20px;
+  }
+}
+@media (max-width: 565px) {
+  .shopCtr {
+    padding: 0px;
+  }
+}

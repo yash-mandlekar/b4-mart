@@ -1,0 +1,9 @@
+.userSearchDiv {
+  width: 90vw;
+  /* height: 100vh; */
+  padding-left: 3vw;
+  gap: 1vw;
+  padding-top: 11vh;
+  display: flex;
+  flex-wrap: wrap;
+}

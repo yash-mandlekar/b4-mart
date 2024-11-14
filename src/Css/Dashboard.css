@@ -1,0 +1,74 @@
+.dashboard-cnt {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 1.5vmax;
+  gap: 1.5vmax;
+}
+.dash {
+  width: 80vw;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+}
+.table-container {
+  padding: 20px;
+  width: 90%;
+  margin-left: 7%;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+  overflow-x: auto;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: 25px 15px;
+  border: none;
+  text-align: center;
+  margin-top: 10px;
+}
+.greenKr {
+  background-color: #1cb07a;
+}
+.redKr {
+  background-color: #ea2533;
+}
+.responsive-table th {
+  background-color: white;
+
+  color: black;
+  font-weight: bold;
+}
+
+.responsive-table > thead > tr {
+  background-color: #f2f2f2;
+}
+.responsive-table tbody tr:hover {
+  background-color: white;
+  margin-top: 1vmax;
+}
+.responsive-table td button {
+  margin: 0 5px;
+  padding: 7px 13px;
+
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.responsive-table td button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+  .responsive-table th,
+  .responsive-table td {
+    padding: 10px;
+  }
+}

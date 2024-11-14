@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /node_modules/
+Disallow: /build/
+Disallow: /scripts/
+Disallow: /src/
+Disallow: /*.json$
+Disallow: /*.md$
+
+Allow: /
+Sitemap: https://www.b4mart.com/sitemap.xml

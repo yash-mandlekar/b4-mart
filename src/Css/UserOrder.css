@@ -1,0 +1,128 @@
+.order-page {
+  width: 90%;
+  padding: 1vw;
+}
+
+h1 {
+  /* text-align: center; */
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.orders-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(300px, 1fr)
+  ); /* Responsive grid */
+  gap: 20px;
+  
+}
+
+.order-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+
+.order-card:hover {
+  transform: translateY(-5px); /* Hover effect */
+}
+
+.order-image {
+  width: 100%;
+  height: 20vh;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.order-details {
+  text-align: left;
+  margin-top: 15px;
+}
+
+.order-details h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #444;
+}
+
+.order-details p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.track-button,.cancelled {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #da1616;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.cancelled{
+  background-color: #7a0d0d;
+}
+
+.track-button:hover {
+  background-color: #ab2222;
+}
+
+/* From Uiverse.io by vk-uiux */
+.card {
+  width: 20rem;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 0.8rem;
+  background-color: white;
+}
+
+.card__skeleton {
+  background-image: linear-gradient(
+    90deg,
+    #ccc 0px,
+    rgb(229 229 229 / 90%) 40px,
+    #ccc 80px
+  );
+  background-size: 300%;
+  background-position: 100% 0;
+  border-radius: inherit;
+  animation: shimmer 1.5s infinite;
+}
+
+.card__title {
+  height: 265px;
+}
+
+.card__description {
+  height: 15px;
+  margin-top: 15px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -100% 0;
+  }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+  .order-card {
+    padding: 15px;
+    margin-left: 10vw;
+  }
+
+  .order-details h2 {
+    font-size: 1.1rem;
+  }
+
+  .track-button {
+    width: 100%;
+    padding: 12px;
+  }
+}

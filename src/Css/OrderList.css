@@ -1,0 +1,114 @@
+/* OrderList.css */
+.coverOrder {
+  width: 100%;
+}
+.order-list-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-list-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.order-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.order-img img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.order-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-list-table th,
+.order-list-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-list-table th {
+  background-color: #f9f9f9;
+}
+
+.order-list-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.status-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.status-label.pending {
+  background-color: #ffd5d5;
+  color: #d33;
+}
+
+.status-label.succeeded {
+  background-color: #d5ffd5;
+  color: #3a3;
+}
+
+.status-label.failed {
+  background-color: #ffd8d8;
+  color: #d33;
+}
+
+.status-select {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .order-list-table,
+  .order-list-table thead,
+  .order-list-table tbody,
+  .order-list-table th,
+  .order-list-table td,
+  .order-list-table tr {
+    display: block;
+  }
+
+  .order-list-table tr {
+    margin-bottom: 15px;
+  }
+
+  .order-list-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .order-list-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+  }
+
+  .order-list-table td {
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+}

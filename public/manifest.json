@@ -1,0 +1,31 @@
+{
+  "name": "My B4mart App",
+  "short_name": "B4mart",
+  "description": "An awesome Progressive Web App built with Vite and React.",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "B4mart.png",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "B4mart.png",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icons/vite-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/vite-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
