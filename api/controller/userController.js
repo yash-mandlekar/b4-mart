@@ -19,6 +19,7 @@ exports.login = async (req, res) => {
     const user = await userModel.findOne({ contact: contact });
     const otp = generateOTP();
     if (!hack) {
+      // https://2factor.in/API/V1/5cebf5c5-83d5-11ef-8b17-0200cd936042/SMS/+917869748239/1010/OTP1
       await axios.get(
         `https://2factor.in/API/V1/${process.env.OPT_API_KEY}/SMS/+91${contact}/${otp}/OTP1`
       );
@@ -315,6 +316,7 @@ function generateOTP() {
 }
 
 const toRadians = (degrees) => (degrees * Math.PI) / 180;
+
 const haversineDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371;
   const dLat = toRadians(lat2 - lat1);

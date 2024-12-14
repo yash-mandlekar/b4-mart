@@ -51,6 +51,15 @@
   font-weight: 600;
   color: rgba(69, 69, 69, 0.468);
   letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+}
+.detail-head button{
+  border: none;
+  padding: 10px 45px;
+  background-color: black;
+  color: #ffffff;
+  border-radius: 6px;
 }
 .details-cnt{
   gap: 10px;

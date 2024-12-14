@@ -12,7 +12,7 @@ var origin = [
   "http://localhost:3000",
   "https://dolphin-app-txpas.ondigitalocean.app",
   "https://b4mart.com",
-  "https://b4-mart-frontend.vercel.app",
+  "https://b4-mart.vercel.app",
 ]; // Allow only your frontend URL
 app.use(
   cors({
