@@ -27,7 +27,7 @@ app.use(
   session({
     resave: true,
     saveUninitialized: true,
-    secret: process.env.EXPRESS_SESSION_SECRET,
+    secret: process.env.EXPRESS_SESSION_SECRET || "azsxdcfvgbhnj",
   })
 );
 app.use(cookieParser());
@@ -49,6 +49,9 @@ app.all("*", (req, res, next) => {
 });
 app.use(genetatedErrors); 
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running at port ${process.env.PORT || 4000}`);
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running at port ${PORT}`);
 });

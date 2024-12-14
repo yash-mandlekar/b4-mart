@@ -21,7 +21,9 @@ exports.login = async (req, res) => {
     if (!hack) {
       // https://2factor.in/API/V1/5cebf5c5-83d5-11ef-8b17-0200cd936042/SMS/+917869748239/1010/OTP1
       await axios.get(
-        `https://2factor.in/API/V1/${process.env.OPT_API_KEY}/SMS/+91${contact}/${otp}/OTP1`
+        `https://2factor.in/API/V1/${
+          process.env.OPT_API_KEY || "5cebf5c5-83d5-11ef-8b17-0200cd936042"
+        }/SMS/+91${contact}/${otp}/OTP1`
       );
     }
     if (!user) {
@@ -207,7 +209,7 @@ exports.autosuggest_google = async (req, res) => {
     { textQuery: req.query.q },
     {
       headers: {
-        "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY,
+        "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY || "AIzaSyAy9lpoCJKj3p-ez31H9mNw5dM115WJr1Y",
         "X-Goog-FieldMask": `places.shortFormattedAddress,places.location`,
         "Content-Type": "application/json",
       },

@@ -111,8 +111,8 @@ userSchema.methods.comparepassword = function (password) {
 };
 
 userSchema.methods.getjwttoken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET || "azsxdcfvgbhnj", {
+    expiresIn: process.env.JWT_EXPIRE || "365d",
   });
 };
 
