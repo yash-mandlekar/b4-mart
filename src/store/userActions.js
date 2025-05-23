@@ -35,6 +35,7 @@ export const asyncloaduser = () => async (dispatch) => {
   try {
     dispatch(setpageloading());
     const { data } = await Axios.get("/me");
+    
     if (data.success) {
       dispatch(loaduser(data.user));
       dispatch(updatecart(data.user.cart));
@@ -42,6 +43,18 @@ export const asyncloaduser = () => async (dispatch) => {
     dispatch(setpageloadingfalse());
   } catch (err) {
     dispatch(setpageloadingfalse());
+    dispatch(errors(err?.response?.data?.message));
+  }
+};
+
+export const asyncupdateuser = (formdata) => async (dispatch) => {
+  try {
+    dispatch(setloading());
+    const { data } = await Axios.put("/profileupdate", formdata);
+    dispatch(loaduser(data.user));
+    notify(data.message);
+    dispatch(setloadingfalse());
+  } catch (err) {
     dispatch(errors(err?.response?.data?.message));
   }
 };

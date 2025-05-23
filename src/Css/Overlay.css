@@ -38,6 +38,7 @@ body {
 }
 .detectPop h4 span {
   font-weight: 600;
+    color: #F55B26;
 }
 .dup {
   width: 100%;
@@ -64,9 +65,10 @@ body {
   padding: 10px 12px;
   border-radius: 5px;
   font-size: 11px;
-  background-color: black;
+  background-color: green;
   color: white;
   border: none;
+  cursor: pointer;
 }
 .or {
   width: 30px;
@@ -97,6 +99,7 @@ body {
   background-color: white;
 }
 .dolo {
+  cursor: pointer;
   width: 100%;
   background-color: #f5f0f0;
   display: flex;

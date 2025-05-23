@@ -58,18 +58,21 @@ const Orders = () => {
                 </td>
                 <td>{order.count}</td>
                 <td>
-                  <select
-                    id={order?._id}
-                    className="status-select"
-                    onChange={handleChange}
-                    defaultValue={order.orderStatus}
-                  >
-                    <option value="placed">Placed</option>
-                    <option value="processing">Processing</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="delivered">Delivered</option>
-                    <option value="not available">Not Available</option>
-                  </select>
+                  {order.orderStatus === "cancelled" ? (
+                    <p className="cancelled">Cancelled</p>
+                  ) : (
+                    <select
+                      id={order?._id}
+                      className="status-select"
+                      onChange={handleChange}
+                      defaultValue={order.orderStatus}
+                    >
+                      <option value="placed">Placed</option>
+                      <option value="on the way">On The Way</option>
+                      <option value="delivered">Delivered</option>
+                      <option value="not available">Not Available</option>
+                    </select>
+                  )}
                 </td>
               </tr>
             ))}

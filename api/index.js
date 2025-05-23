@@ -47,7 +47,7 @@ app.use("/sorry", async (req, res) => {
 app.all("*", (req, res, next) => {
   next(new ErorrHandler(`Requested URL Not Found ${req.url}`, 404));
 });
-app.use(genetatedErrors); 
+app.use(genetatedErrors);
 
 
 const PORT = process.env.PORT || 4000;

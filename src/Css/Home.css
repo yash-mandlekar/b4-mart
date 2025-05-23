@@ -3,7 +3,7 @@
   height: fit-content;
   width: 100vw;
   position: relative;
-  background-color: #f5f4f4;
+  background-color: #f7f5ef;
   /* display: flex; */
 }
 
@@ -162,7 +162,7 @@
   padding: 12px;
   pointer-events: none;
   border-radius: 200px !important;
-  background-color: #191a1e;
+  background-color: #4C4F4E;
 }
 
 .icon svg {
@@ -181,7 +181,7 @@ nav {
 .logo {
   width: 7vmax;
   height: 7vmax;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   overflow: hidden;
 }
 .logo > img {
@@ -243,9 +243,9 @@ nav {
   filter: invert(1);
 }
 .active {
-  background-color: black;
+  background-color: #F55B26;
   border-radius: 15px;
-  box-shadow: 0px 4px 7.2px 1px #00000086;
+  box-shadow: 0px 4px 7.2px 1px #f55a2672;
 }
 .searchBox .top-nav-item {
   padding: 10px;
@@ -257,7 +257,7 @@ nav {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: black;
+  background-color: #4C4F4E;
   cursor: pointer;
 }
 
@@ -276,6 +276,7 @@ nav {
   height: 2.8vmax;
   border-radius: 50%;
   overflow: hidden;
+  border: 2px solid #4d4f4e;
 }
 .profile > img {
   width: 100%;
@@ -413,7 +414,7 @@ h2 {
   border-radius: 5px;
   font-size: 15px;
   cursor: pointer;
-  background-color: black;
+  background-color: #4C4F4E;
   color: white;
 }
 .location-btn:hover {

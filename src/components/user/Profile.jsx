@@ -7,6 +7,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase-config";
 import { notify } from "../common/Toast";
 import { asyncupdateprofile } from "../../store/userActions";
+import imageCompression from "browser-image-compression";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -62,16 +63,32 @@ const Profile = () => {
   };
   const uploadFile = async (event) => {
     if (!event.target.files[0]) return;
-    if (
-      !["jpg", "jpeg", "png"].includes(event.target.files[0].type.split("/")[1])
-    )
-      return notify("image type is not valid");
+    const file = event.target.files[0];
+
+    if (!["jpg", "jpeg", "png"].includes(file.type.split("/")[1])) {
+      return notify("Image type is not valid");
+    }
 
     try {
+      notify("Compressing image...");
+
+      // Compression options
+      const options = {
+        maxSizeMB: 1, // Maximum file size (in MB)
+        maxWidthOrHeight: 800, // Max width or height
+        useWebWorker: true, // Speed up compression
+      };
+
+      const compressedFile = await imageCompression(file, options);
+      console.log("Compressed File Size:", compressedFile.size / 1024, "KB");
+
       notify("Uploading...");
-      const imageRef = ref(storage, `users/${event.target.files[0].name}`);
-      await uploadBytes(imageRef, event.target.files[0]);
+
+      const imageRef = ref(storage, `users/${compressedFile.name}`);
+      await uploadBytes(imageRef, compressedFile);
       const url = await getDownloadURL(imageRef);
+
+      console.log("url", url);
       seturl(url);
     } catch (err) {
       console.log(err);

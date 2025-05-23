@@ -64,10 +64,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if(user){
+    if (user) {
       fetchData();
+      dispatch(asynsingleshopproducts(user?._id));
     }
-    dispatch(asynsingleshopproducts(user?._id));
   }, []);
 
   useEffect(() => {
@@ -88,8 +88,11 @@ const Dashboard = () => {
 
   return (
     <div className="dash">
-      {pieseries?.length && <PieChart label={label} pieseries={pieseries} />}
-      {series?.length && <BarChart data={series} categories={month} />}
+      {pieseries?.length > 0 && (
+        <PieChart label={label} pieseries={pieseries} />
+      )}
+      {series?.length > 0 && <BarChart data={series} categories={month} />}
+      {series?.length === 0 && <h1>No data to display</h1>}
     </div>
   );
 };

@@ -90,7 +90,8 @@ exports.upgrade_role = async (req, res) => {
 // Users
 
 exports.all_user = async (req, res) => {
-  const user = await userModel.find();
+
+  const user = await userModel.find({ role: "user" });
   res.json(user);
 };
 

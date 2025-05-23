@@ -203,14 +203,17 @@ exports.find_shop = async (req, res) => {
     return res.status(500).json({ message: "Error finding shops" });
   }
 };
+
 exports.autosuggest_google = async (req, res) => {
   const { data } = await axios.post(
     "https://places.googleapis.com/v1/places:searchText",
     { textQuery: req.query.q },
     {
       headers: {
-        "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY || "AIzaSyAy9lpoCJKj3p-ez31H9mNw5dM115WJr1Y",
-        "X-Goog-FieldMask": `places.shortFormattedAddress,places.location`,
+        "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY,
+        "X-Goog-FieldMask":
+          "places.formattedAddress,places.location,places.shortFormattedAddress",
+
         "Content-Type": "application/json",
       },
     }

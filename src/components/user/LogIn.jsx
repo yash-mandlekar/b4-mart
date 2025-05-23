@@ -23,9 +23,9 @@ const LogIn = () => {
     try {
       if (contact.length != 10) return notify("Enter a vaild number");
       const { data } = await Axios.post("/login", { contact });
-      notify(data.message);
-      if (data.message == "OTP send succesfully") {
+      if (data.message) {
         setpage(1);
+        notify(data.message);
       }
     } catch (err) {
       alert(err);

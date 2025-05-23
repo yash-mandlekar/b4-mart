@@ -80,6 +80,10 @@ const Products = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(preview);
+    if (preview.length < 1) {
+      notify("Please upload at least one image");
+      return;
+    }
     const formData = new FormData();
     formData.append("product_name", product_name);
     formData.append("category", category);
@@ -88,7 +92,7 @@ const Products = () => {
     formData.append("quantity", quantity);
     formData.append("quantity_type", quantity_type);
     formData.append("stocks", stocks);
-    formData.append("discount", discount);
+    formData.append("discount", discount || 0);
     formData.append("productpic", preview);
     dispatch(asynccreateproduct(formData));
     setForm({
@@ -101,11 +105,12 @@ const Products = () => {
       stocks: "",
       discount: "",
     });
+    document.querySelector('input[type="file"]').value = "";
     setpreview([]);
   };
 
   useEffect(() => {
-    dispatch(asynsingleshopproducts(user._id));
+    dispatch(asynsingleshopproducts(user?._id));
   }, [products]);
   return (
     <div className="covermain">
@@ -212,7 +217,6 @@ const Products = () => {
             placeholder="Product Photo URL"
             onChange={handleFileChange}
             multiple
-            required
             className="productManagement__input"
           />
           <p>{firemsg}</p>
