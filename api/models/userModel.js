@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
+      default: "Anonymous",
       minLength: [3, "username should be atleast 3 character long"],
     },
     contact: {
