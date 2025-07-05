@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../Css/UserProfile.css";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../../Axios";
 import { Link } from "react-router-dom";
@@ -8,22 +7,21 @@ import { storage } from "../firebase-config";
 import { notify } from "../common/Toast";
 import { asyncupdateprofile } from "../../store/userActions";
 import imageCompression from "browser-image-compression";
+import { User, ShoppingCart, List, Camera } from "lucide-react";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const fileref = useRef(null);
-  // Use state for form inputs, initialized with existing user data
+
   const [username, setUsername] = useState(user?.username || "");
   const [house_no, setHouse_no] = useState(user?.house_no || "");
   const [area, setArea] = useState(user?.area || "");
   const [city, setCity] = useState(user?.city || "");
   const [pincode, setPincode] = useState(user?.pincode || "");
   const [landmark, setLandmark] = useState(user?.landmark || "");
-
   const [url, seturl] = useState(null);
 
-  // Update state when user changes
   useEffect(() => {
     if (user) {
       setUsername(user.username);
@@ -43,14 +41,13 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const userSchema = {
-      username: username,
-      house_no: house_no,
-      area: area,
-      city: city,
-      pincode: pincode,
-      landmark: landmark,
+      username,
+      house_no,
+      area,
+      city,
+      pincode,
+      landmark,
     };
-    // Send POST request to the server
     Axios.put("/profileupdate", userSchema)
       .then((response) => {
         if (response.data.user) {
@@ -61,6 +58,7 @@ const Profile = () => {
         console.error("There was an error updating the profile!", error);
       });
   };
+
   const uploadFile = async (event) => {
     if (!event.target.files[0]) return;
     const file = event.target.files[0];
@@ -71,122 +69,153 @@ const Profile = () => {
 
     try {
       notify("Compressing image...");
-
-      // Compression options
       const options = {
-        maxSizeMB: 1, // Maximum file size (in MB)
-        maxWidthOrHeight: 800, // Max width or height
-        useWebWorker: true, // Speed up compression
+        maxSizeMB: 1,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
       };
-
       const compressedFile = await imageCompression(file, options);
-      console.log("Compressed File Size:", compressedFile.size / 1024, "KB");
-
       notify("Uploading...");
-
       const imageRef = ref(storage, `users/${compressedFile.name}`);
       await uploadBytes(imageRef, compressedFile);
       const url = await getDownloadURL(imageRef);
-
-      console.log("url", url);
       seturl(url);
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
-    <div className="userprofile">
-      <div className="profile-edit-container">
-        {/* Left Sidebar */}
-        <div className="profile-edit-sidebar">
-          <div className="profile-edit-details">
+    <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center py-10 px-2">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl flex flex-col md:flex-row overflow-hidden">
+        {/* Sidebar */}
+        <div className="w-full md:w-1/3 bg-[#f75c1e]/5 flex flex-col items-center py-10 px-6 gap-8">
+          <div className="relative group">
             <img
               src={url ? url : user?.profilepic}
               alt="User"
-              className="profile-edit-image"
+              className="w-28 h-28 rounded-full object-cover border-4 border-[#f75c1e] shadow-lg cursor-pointer transition hover:scale-105"
               onClick={() => fileref.current.click()}
             />
+            <button
+              type="button"
+              className="absolute bottom-2 right-2 bg-white border border-gray-200 rounded-full p-2 shadow hover:bg-[#f75c1e] hover:text-white transition"
+              onClick={() => fileref.current.click()}
+              title="Change profile picture"
+            >
+              <Camera size={18} />
+            </button>
             <input
-              className="profile-pic-input"
+              className="hidden"
               ref={fileref}
               type="file"
               accept="image/*"
               onChange={uploadFile}
             />
-
-            <h3 className="profile-edit-username">{username}</h3>
-            <p className="profile-edit-email">{user?.contact}</p>
           </div>
-          <div className="profile-edit-menu">
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-[#3f3f3f]">{username}</h3>
+            <p className="text-sm text-gray-500">{user?.contact}</p>
+          </div>
+          <div className="flex flex-col gap-3 w-full">
             <Link to={"/home/orders"}>
-              <button className="profile-edit-menu-button">Your Orders</button>
+              <button className="w-full flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-gray-200 text-[#3f3f3f] hover:bg-[#f75c1e]/10 hover:text-[#f75c1e] font-medium transition">
+                <List size={18} />
+                Your Orders
+              </button>
             </Link>
             <Link to={"/home/cart"}>
-              <button className="profile-edit-menu-button">Your Cart</button>
+              <button className="w-full flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-gray-200 text-[#3f3f3f] hover:bg-[#f75c1e]/10 hover:text-[#f75c1e] font-medium transition">
+                <ShoppingCart size={18} />
+                Your Cart
+              </button>
             </Link>
           </div>
         </div>
-
         {/* Profile Edit Form */}
-        <div className="profile-edit-form">
-          <h2>Profile Settings</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="profile-edit-form-group">
-              <label>Username</label>
+        <div className="w-full md:w-2/3 py-10 px-6 md:px-12 flex flex-col justify-center">
+          <h2 className="text-2xl font-bold text-[#3f3f3f] mb-6 flex items-center gap-2">
+            <User className="text-[#f75c1e]" size={26} />
+            Profile Settings
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-semibold text-[#3f3f3f] mb-1">
+                Username
+              </label>
               <input
                 type="text"
                 placeholder="Username"
-                defaultValue={username}
+                value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-[#f75c1e] focus:ring-2 focus:ring-[#f75c1e]/20 transition"
               />
             </div>
-            <div className="profile-edit-form-group">
-              <label>House No.</label>
+            <div>
+              <label className="block text-sm font-semibold text-[#3f3f3f] mb-1">
+                House No.
+              </label>
               <input
                 type="text"
                 placeholder="House No."
-                defaultValue={house_no}
+                value={house_no}
                 onChange={(e) => setHouse_no(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-[#f75c1e] focus:ring-2 focus:ring-[#f75c1e]/20 transition"
               />
             </div>
-            <div className="profile-edit-form-group">
-              <label>Area</label>
+            <div>
+              <label className="block text-sm font-semibold text-[#3f3f3f] mb-1">
+                Area
+              </label>
               <input
                 type="text"
                 placeholder="Area"
-                defaultValue={area}
+                value={area}
                 onChange={(e) => setArea(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-[#f75c1e] focus:ring-2 focus:ring-[#f75c1e]/20 transition"
               />
             </div>
-            <div className="profile-edit-form-group">
-              <label>Landmark</label>
+            <div>
+              <label className="block text-sm font-semibold text-[#3f3f3f] mb-1">
+                Landmark
+              </label>
               <input
                 type="text"
                 placeholder="Landmark"
-                defaultValue={landmark}
+                value={landmark}
                 onChange={(e) => setLandmark(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-[#f75c1e] focus:ring-2 focus:ring-[#f75c1e]/20 transition"
               />
             </div>
-            <div className="profile-edit-form-group">
-              <label>City/Town</label>
+            <div>
+              <label className="block text-sm font-semibold text-[#3f3f3f] mb-1">
+                City/Town
+              </label>
               <input
                 type="text"
-                placeholder="State/Region"
-                defaultValue={city}
+                placeholder="City/Town"
+                value={city}
                 onChange={(e) => setCity(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-[#f75c1e] focus:ring-2 focus:ring-[#f75c1e]/20 transition"
               />
             </div>
-            <div className="profile-edit-form-group">
-              <label>Pincode</label>
+            <div>
+              <label className="block text-sm font-semibold text-[#3f3f3f] mb-1">
+                Pincode
+              </label>
               <input
                 type="number"
                 placeholder="Pincode"
-                defaultValue={pincode}
+                value={pincode}
                 onChange={(e) => setPincode(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-[#f75c1e] focus:ring-2 focus:ring-[#f75c1e]/20 transition"
               />
             </div>
-            <div className="profile-edit-form-group">
-              <button type="submit" className="profile-edit-save-button">
+            <div>
+              <button
+                type="submit"
+                className="w-full bg-[#f75c1e] hover:bg-[#ff7a3a] text-white font-semibold px-8 py-3 rounded-lg shadow transition-all duration-200 active:scale-95"
+              >
                 Save Profile
               </button>
             </div>

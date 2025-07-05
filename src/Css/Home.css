@@ -58,12 +58,8 @@
 
 .searchBox {
   width: 90%;
-  background-color: #f5f4f4;
-  /* position: fixed; */
-  /* top: 0; */
   z-index: 2;
   padding: 1vmax 2vmax;
-  /* overflow: hidden; */
 }
 .category {
   width: 90%;
