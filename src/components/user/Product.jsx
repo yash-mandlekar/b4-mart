@@ -22,7 +22,7 @@ const Product = ({ data }) => {
 
   useEffect(() => {
     var a = cart.filter((e) => {
-      return e?.product?._id == data?._id;
+      return e?.product?._id === data?._id;
     });
     if (a[0]) {
       setQuantity(a[0]?.count);

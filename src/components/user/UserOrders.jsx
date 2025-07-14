@@ -47,9 +47,9 @@ const UserOrders = () => {
                   <p>
                     <b>Status:</b> <strong>{order.orderStatus}</strong>
                   </p>
-                  {order.orderStatus == "cancelled" ? (
+                  {order.orderStatus === "cancelled" ? (
                     <button className="cancelled">Cancelled Order</button>
-                  ) : order.orderStatus == "placed" ? (
+                  ) : order.orderStatus === "placed" ? (
                     <button
                       className="track-button"
                       onClick={() => handleCancelOrder(order._id)}

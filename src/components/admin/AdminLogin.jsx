@@ -21,10 +21,10 @@ const AdminLogin = () => {
     dispatch(asyncadminlogin(formdata));
   };
   useEffect(() => {
-    if (role == "shop" || role == "admin") {
+    if (role === "shop" || role === "admin") {
       navigate("/admin");
     }
-  }, [role]);
+  }, [role, dispatch,navigate]);
   return (
     <div className="adminpage" style={{ backgroundColor: "#e8e8e8" }}>
       <form className="form-control" onSubmit={handleSubmit}>
@@ -39,7 +39,6 @@ const AdminLogin = () => {
             type="text"
             placeholder="Enter Number"
           />
-         
         </div>
         <div className="input-field">
           <input
@@ -51,7 +50,6 @@ const AdminLogin = () => {
             type="password"
             placeholder="Password"
           />
-        
         </div>
 
         <button className="submit-btn">Sign In</button>

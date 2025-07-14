@@ -32,7 +32,7 @@ const SingleProduct = () => {
       setSingleProduct(data.data);
       console.log(cart);
       var a = cart?.filter((e) => {
-        return e.product._id == data.data._id;
+        return e.product._id === data.data._id;
       });
       if (a[0]) {
         setCount(a[0]?.count);

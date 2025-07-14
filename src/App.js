@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncloadlocation, asyncloaduser } from "./store/userActions";
@@ -31,7 +31,7 @@ const App = () => {
   useEffect(() => {
     Dispatch(asyncloaduser());
     Dispatch(asyncloadlocation());
-  }, []);
+  }, [Dispatch]);
 
   useEffect(() => {
     if (error) notify(error);

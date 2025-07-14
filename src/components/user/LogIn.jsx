@@ -56,7 +56,7 @@ const LogIn = () => {
     });
     console.log(data);
 
-    if (data.message == "OTP send succesfully") {
+    if (data.message === "OTP send succesfully") {
       setFormdata({
         contact: "1234567890",
         otp: data.user.otp,
@@ -66,9 +66,9 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    if (role == "user") {
+    if (role === "user") {
       navigate("/home");
-    } else if (role == "admin" || role == "shop") {
+    } else if (role === "admin" || role === "shop") {
       navigate("/admin");
     }
   }, []);
@@ -94,7 +94,7 @@ const LogIn = () => {
             <p className="sp-text">
               We will send you 4 digit verification code
             </p>
-            {page == 0 ? (
+            {page === 0 ? (
               <form className="form" onSubmit={handleSubmit}>
                 <div className="input-group">
                   <label htmlFor="username">Mobile</label>
