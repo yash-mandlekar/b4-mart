@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  Store, 
-  User, 
-  Phone, 
-  Lock, 
-  Plus, 
+import {
+  Store,
+  User,
+  Phone,
+  Lock,
+  Plus,
   Search,
-  Filter,
   Package,
   Trash2,
   AlertTriangle,
-  Eye,
-  MoreHorizontal,
-  ChevronDown
 } from "lucide-react";
 import {
   asynallshops,
@@ -24,7 +20,7 @@ import { notify } from "../common/Toast";
 
 const AdminShops = () => {
   const dispatch = useDispatch();
-  const { shops, role } = useSelector((state) => state.user);
+  const { shops } = useSelector((state) => state.user);
 
   const [formdata, setformdata] = useState({
     username: "",
@@ -46,7 +42,7 @@ const AdminShops = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       if (username.length < 3) {
         notify("Enter a valid username");
@@ -60,7 +56,7 @@ const AdminShops = () => {
         notify("Password must be at least 6 characters");
         return;
       }
-      
+
       await dispatch(asynccreateshop(formdata));
       setformdata({ username: "", contact: "", password: "" });
       setShowAddForm(false);
@@ -89,10 +85,12 @@ const AdminShops = () => {
     }
   };
 
-  const filteredShops = shops?.filter(shop => 
-    shop.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    shop.contact.includes(searchTerm)
-  ) || [];
+  const filteredShops =
+    shops?.filter(
+      (shop) =>
+        shop.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        shop.contact.includes(searchTerm),
+    ) || [];
 
   useEffect(() => {
     dispatch(asynallshops());
@@ -100,12 +98,11 @@ const AdminShops = () => {
     // if (role && role !== "admin") {
     //   navigate("/admin");
     // }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        
         {/* Header Section */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -121,7 +118,9 @@ const AdminShops = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg text-sm text-gray-600">
                 <Store className="w-4 h-4" />
-                <span className="font-medium">{filteredShops.length} Shops</span>
+                <span className="font-medium">
+                  {filteredShops.length} Shops
+                </span>
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
@@ -149,7 +148,7 @@ const AdminShops = () => {
                 ×
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -257,7 +256,7 @@ const AdminShops = () => {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {filteredShops.map((shop, index) => (
-                  <tr 
+                  <tr
                     key={shop._id}
                     className="hover:bg-gray-50 transition-colors duration-150"
                   >
@@ -271,19 +270,23 @@ const AdminShops = () => {
                           />
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{shop.username}</div>
-                          <div className="text-sm text-gray-500">Shop #{index + 1}</div>
+                          <div className="font-medium text-gray-900">
+                            {shop.username}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            Shop #{index + 1}
+                          </div>
                         </div>
                       </div>
                     </td>
-                    
+
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 text-gray-900">
                         <Phone className="w-4 h-4 text-gray-400" />
                         {shop.contact}
                       </div>
                     </td>
-                    
+
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <Package className="w-4 h-4 text-gray-400" />
@@ -293,7 +296,7 @@ const AdminShops = () => {
                         <span className="text-sm text-gray-500">products</span>
                       </div>
                     </td>
-                    
+
                     <td className="px-6 py-4">
                       <button
                         onClick={() => handleDeleteShop(shop._id)}
@@ -327,8 +330,12 @@ const AdminShops = () => {
                     />
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900">{shop.username}</div>
-                    <div className="text-sm text-gray-500">Shop #{index + 1}</div>
+                    <div className="font-medium text-gray-900">
+                      {shop.username}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Shop #{index + 1}
+                    </div>
                   </div>
                 </div>
                 <button
@@ -343,12 +350,16 @@ const AdminShops = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <Phone className="w-4 h-4 text-gray-400" />
                   <span className="text-gray-600">Contact:</span>
-                  <span className="font-medium text-gray-900">{shop.contact}</span>
+                  <span className="font-medium text-gray-900">
+                    {shop.contact}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Package className="w-4 h-4 text-gray-400" />
                   <span className="text-gray-600">Products:</span>
-                  <span className="font-medium text-gray-900">{shop.products?.length || 0}</span>
+                  <span className="font-medium text-gray-900">
+                    {shop.products?.length || 0}
+                  </span>
                 </div>
               </div>
             </div>
@@ -359,12 +370,13 @@ const AdminShops = () => {
         {filteredShops.length === 0 && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
             <Store className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No shops found</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No shops found
+            </h3>
             <p className="text-gray-500 mb-4">
-              {searchTerm 
+              {searchTerm
                 ? "Try adjusting your search criteria"
-                : "Get started by creating your first shop"
-              }
+                : "Get started by creating your first shop"}
             </p>
             {!searchTerm && (
               <button
@@ -386,10 +398,13 @@ const AdminShops = () => {
                 <div className="p-2 bg-red-100 rounded-full">
                   <AlertTriangle className="w-6 h-6 text-red-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">Confirm Delete</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Confirm Delete
+                </h3>
               </div>
               <p className="text-gray-600 mb-6">
-                Are you sure you want to delete this shop? This action cannot be undone.
+                Are you sure you want to delete this shop? This action cannot be
+                undone.
               </p>
               <div className="flex gap-3 justify-end">
                 <button

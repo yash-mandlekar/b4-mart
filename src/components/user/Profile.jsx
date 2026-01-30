@@ -36,7 +36,7 @@ const Profile = () => {
     if (url) {
       dispatch(asyncupdateprofile(url));
     }
-  }, [url]);
+  }, [url, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

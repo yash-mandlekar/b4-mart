@@ -23,9 +23,7 @@ const Home = () => {
   }, [isLoggedIn, navigate]);
   const dispatch = useDispatch();
   const [counter, setCounter] = useState(0);
-  const { cart, user, singleshop_products } = useSelector(
-    (state) => state.user
-  );
+  const { cart, user } = useSelector((state) => state.user);
 
   useEffect(() => {
     let count = 0;

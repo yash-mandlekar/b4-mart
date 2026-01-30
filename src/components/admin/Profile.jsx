@@ -1,23 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  User, 
-  Camera, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Home, 
-  Building, 
+import {
+  User,
+  Camera,
+  Phone,
+  Mail,
+  MapPin,
+  Home,
+  Building,
   Navigation,
   Hash,
   Package,
   ShoppingBag,
   Save,
   Edit3,
-  Upload,
-  CheckCircle
 } from "lucide-react";
-import Axios from "../../Axios";
+
 import { asyncupdateprofile, asyncupdateuser } from "../../store/userActions";
 import { notify } from "../common/Toast";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -28,7 +26,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const fileref = useRef(null);
-  
+
   // Form state
   const [username, setUsername] = useState(user?.username || "");
   const [house_no, setHouse_no] = useState(user?.house_no || "");
@@ -60,12 +58,12 @@ const Profile = () => {
     if (url) {
       dispatch(asyncupdateprofile(url));
     }
-  }, [url]);
+  }, [url, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
-    
+
     const userSchema = {
       username: username,
       house_no: house_no,
@@ -76,7 +74,7 @@ const Profile = () => {
       contact: contact,
       email: email,
     };
-    
+
     try {
       await dispatch(asyncupdateuser(userSchema));
       notify("Profile updated successfully!");
@@ -98,7 +96,7 @@ const Profile = () => {
     try {
       setIsUploading(true);
       notify("Compressing image...");
-      
+
       const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 800,
@@ -113,7 +111,7 @@ const Profile = () => {
       const imageRef = ref(storage, `users/${compressedFile.name}`);
       await uploadBytes(imageRef, compressedFile);
       const downloadUrl = await getDownloadURL(imageRef);
-      
+
       console.log("url", downloadUrl);
       seturl(downloadUrl);
       notify("Profile picture updated!");
@@ -128,14 +126,16 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto space-y-6">
-        
         {/* Profile Header */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="bg-gradient-to-r from-orange-500 to-orange-600 h-32 md:h-40"></div>
           <div className="relative px-6 pb-6">
             {/* Profile Picture */}
             <div className="flex flex-col md:flex-row md:items-end md:space-x-6 -mt-16 md:-mt-20">
-              <div className="relative group cursor-pointer" onClick={() => fileref.current.click()}>
+              <div
+                className="relative group cursor-pointer"
+                onClick={() => fileref.current.click()}
+              >
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white bg-white overflow-hidden shadow-lg">
                   <img
                     src={url || user?.profilepic || "/api/placeholder/160/160"}
@@ -160,7 +160,7 @@ const Profile = () => {
                   className="hidden"
                 />
               </div>
-              
+
               {/* User Info */}
               <div className="mt-4 md:mt-0 md:pb-4 text-center md:text-left">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -192,7 +192,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-green-100 rounded-lg">
@@ -213,20 +213,21 @@ const Profile = () => {
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <div className="flex items-center gap-3">
               <Edit3 className="w-5 h-5 text-gray-400" />
-              <h2 className="text-xl font-semibold text-gray-900">Edit Profile</h2>
+              <h2 className="text-xl font-semibold text-gray-900">
+                Edit Profile
+              </h2>
             </div>
           </div>
 
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
               {/* Personal Information */}
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
                   <User className="w-5 h-5 text-gray-400" />
                   Personal Information
                 </h3>
-                
+
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Username
@@ -257,7 +258,9 @@ const Profile = () => {
                       className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
                     />
                   </div>
-                  <p className="text-xs text-gray-500">Contact number cannot be changed</p>
+                  <p className="text-xs text-gray-500">
+                    Contact number cannot be changed
+                  </p>
                 </div>
 
                 <div className="space-y-2">
@@ -283,7 +286,7 @@ const Profile = () => {
                   <MapPin className="w-5 h-5 text-gray-400" />
                   Address Information
                 </h3>
-                
+
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     House Number

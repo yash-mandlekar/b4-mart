@@ -14,6 +14,7 @@ const Shops = ({ data }) => {
                 ? "https://www.shutterstock.com/image-vector/shop-logo-good-260nw-1290022027.jpg"
                 : data.profilepic
             }
+            alt={data.username}
           />
         </div>
         <div className="name">{data.username}</div>

@@ -3,7 +3,6 @@ import {
   ShoppingCart,
   Plus,
   Minus,
-  Trash2,
   CreditCard,
   Truck,
   MapPin,
@@ -208,11 +207,11 @@ const Cart = () => {
 
   useEffect(() => {
     let count = 0;
-    cart.map((e) => {
+    cart.forEach((e) => {
       count += e.count;
     });
     let tot = 0;
-    cart.map((e) => {
+    cart.forEach((e) => {
       tot += e?.count * e?.product?.price;
     });
     setTotal(tot);

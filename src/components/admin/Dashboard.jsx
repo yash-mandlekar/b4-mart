@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   TrendingUp,
@@ -30,32 +30,35 @@ const Dashboard = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  const [label, setLabel] = useState([
-    "Paan Corner",
-    "Dairy, Bread & Eggs",
-    "Fruits & Vegetables",
-    "Cold Drinks & Juices",
-    "Snacks & Munchies",
-    "Breakfast & Instant Food",
-    "Sweet Tooth",
-    "Bakery",
-    "Tea, Coffee & Health Drink",
-    "Atta, Rice & Dal",
-    "Masala, Oil & More",
-    "Sauces & Spreads",
-    "Chicken, Meat & Fish",
-    "Organic & Healthy Living",
-    "Baby Care",
-    "Pharma & Wellness",
-    "Cleaning Essentials",
-    "Home & Office",
-    "Personal Care",
-    "Pet Care",
-  ]);
+  const label = useMemo(
+    () => [
+      "Paan Corner",
+      "Dairy, Bread & Eggs",
+      "Fruits & Vegetables",
+      "Cold Drinks & Juices",
+      "Snacks & Munchies",
+      "Breakfast & Instant Food",
+      "Sweet Tooth",
+      "Bakery",
+      "Tea, Coffee & Health Drink",
+      "Atta, Rice & Dal",
+      "Masala, Oil & More",
+      "Sauces & Spreads",
+      "Chicken, Meat & Fish",
+      "Organic & Healthy Living",
+      "Baby Care",
+      "Pharma & Wellness",
+      "Cleaning Essentials",
+      "Home & Office",
+      "Personal Care",
+      "Pet Care",
+    ],
+    [],
+  );
   const [pieseries, setPieseries] = useState();
   const dispatch = useDispatch();
   const { singleshop_products, user, role } = useSelector(
-    (state) => state.user
+    (state) => state.user,
   );
 
   const fetchData = async () => {
@@ -114,7 +117,8 @@ const Dashboard = () => {
       fetchData();
       dispatch(asynsingleshopproducts(user?._id));
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (singleshop_products.length) {
@@ -133,7 +137,7 @@ const Dashboard = () => {
         totalProducts: singleshop_products.length,
       }));
     }
-  }, [singleshop_products]);
+  }, [singleshop_products, label]);
 
   // Stats cards configuration
   const statsCards = [

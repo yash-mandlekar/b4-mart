@@ -21,7 +21,7 @@ const LogIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (contact.length != 10) return notify("Enter a vaild number");
+      if (contact.length !== 10) return notify("Enter a vaild number");
       const { data } = await Axios.post("/login", { contact });
       if (data.message) {
         setpage(1);
@@ -34,7 +34,7 @@ const LogIn = () => {
   };
   const handleOTPSubmit = async (e) => {
     e.preventDefault();
-    if (otp.length != 4) return notify("Enter a vaild OTP");
+    if (otp.length !== 4) return notify("Enter a vaild OTP");
     const { data } = await Axios.post("/otp", { contact, otp });
 
     if (data.success) {
@@ -71,7 +71,7 @@ const LogIn = () => {
     } else if (role === "admin" || role === "shop") {
       navigate("/admin");
     }
-  }, []);
+  }, [navigate, role]);
   return page_loading ? (
     <Loader />
   ) : (

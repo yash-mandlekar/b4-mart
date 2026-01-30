@@ -32,7 +32,7 @@ const PieChart = ({ pieseries, label }) => {
     return () => {
       chart.destroy();
     };
-  }, []);
+  }, [pieseries, label]);
 
   return <div ref={chartRef}></div>;
 };

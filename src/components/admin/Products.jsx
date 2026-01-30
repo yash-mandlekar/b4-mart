@@ -4,33 +4,32 @@ import { storage } from "../firebase-config";
 import { notify } from "../common/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  asynallproducts,
   asynccreateproduct,
   asyncremoveproduct,
   asynsingleshopproducts,
 } from "../../store/userActions";
-import { 
-  Plus, 
-  Package, 
-  Upload, 
-  X, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Package,
+  Upload,
+  X,
+  Trash2,
+  Eye,
   Edit,
   Search,
   Filter,
   ChevronDown,
-  Camera
+  Camera,
 } from "lucide-react";
 
 const Products = () => {
   const dispatch = useDispatch();
   const { user, products, singleshop_products } = useSelector(
-    (state) => state.user
+    (state) => state.user,
   );
 
   // Tab state
-  const [activeTab, setActiveTab] = useState('add');
+  const [activeTab, setActiveTab] = useState("add");
 
   // Form state
   const [form, setForm] = useState({
@@ -84,7 +83,7 @@ const Products = () => {
     "Cleaning Essentials",
     "Home & Office",
     "Personal Care",
-    "Pet Care"
+    "Pet Care",
   ];
 
   const handleChange = (e) => {
@@ -94,14 +93,19 @@ const Products = () => {
 
   const uploadFiles = async (event, i) => {
     if (!event.target.files[i]) return;
-    if (!["jpg", "jpeg", "png"].includes(event.target.files[i].type.split("/")[1])) {
+    if (
+      !["jpg", "jpeg", "png"].includes(event.target.files[i].type.split("/")[1])
+    ) {
       return notify("File type is not valid");
     }
-    
+
     try {
       setUploadProgress(true);
       setfiremsg("Uploading...");
-      const imageRef = ref(storage, `products/${Date.now()}_${event.target.files[i].name}`);
+      const imageRef = ref(
+        storage,
+        `products/${Date.now()}_${event.target.files[i].name}`,
+      );
       await uploadBytes(imageRef, event.target.files[i]);
       const url = await getDownloadURL(imageRef);
       setpreview((prev) => [...prev, url]);
@@ -123,19 +127,19 @@ const Products = () => {
       notify("You can upload only 5 files maximum");
       return;
     }
-    
+
     for (let i = 0; i < event.target.files.length; i++) {
       uploadFiles(event, i);
     }
   };
 
   const removePreviewImage = (index) => {
-    setpreview(prev => prev.filter((_, i) => i !== index));
+    setpreview((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (preview.length < 1) {
       notify("Please upload at least one image");
       return;
@@ -153,7 +157,7 @@ const Products = () => {
     formData.append("productpic", preview);
 
     dispatch(asynccreateproduct(formData));
-    
+
     // Reset form
     setForm({
       product_name: "",
@@ -167,41 +171,47 @@ const Products = () => {
     });
     document.querySelector('input[type="file"]').value = "";
     setpreview([]);
-    
+
     // Switch to products list tab
-    setActiveTab('list');
+    setActiveTab("list");
     notify("Product added successfully!");
   };
 
   // Filter products based on search and category
-  const filteredProducts = singleshop_products?.filter(product => {
-    const matchesSearch = product.product_name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = categoryFilter === "" || product.category === categoryFilter;
+  const filteredProducts = singleshop_products?.filter((product) => {
+    const matchesSearch = product.product_name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      categoryFilter === "" || product.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
 
   useEffect(() => {
     dispatch(asynsingleshopproducts(user?._id));
-  }, [products]);
+  }, [products, dispatch, user?._id]);
 
   const TabButton = ({ id, label, icon: Icon, count }) => (
     <button
       onClick={() => setActiveTab(id)}
       className={`
         flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-200
-        ${activeTab === id 
-          ? 'bg-orange-500 text-white shadow-lg' 
-          : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
+        ${
+          activeTab === id
+            ? "bg-orange-500 text-white shadow-lg"
+            : "text-gray-600 hover:text-orange-500 hover:bg-orange-50"
         }
       `}
     >
       <Icon size={20} />
       <span>{label}</span>
       {count !== undefined && (
-        <span className={`
+        <span
+          className={`
           px-2 py-1 rounded-full text-xs font-bold
-          ${activeTab === id ? 'bg-white text-orange-500' : 'bg-gray-200 text-gray-600'}
-        `}>
+          ${activeTab === id ? "bg-white text-orange-500" : "bg-gray-200 text-gray-600"}
+        `}
+        >
           {count}
         </span>
       )}
@@ -213,33 +223,35 @@ const Products = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Product Management</h1>
-          <p className="text-gray-600">Manage your product inventory efficiently</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Product Management
+          </h1>
+          <p className="text-gray-600">
+            Manage your product inventory efficiently
+          </p>
         </div>
 
         {/* Tab Navigation */}
         <div className="flex space-x-2 mb-8 bg-white p-2 rounded-xl shadow-sm">
-          <TabButton 
-            id="add" 
-            label="Add Product" 
-            icon={Plus} 
-          />
-          <TabButton 
-            id="list" 
-            label="Product List" 
-            icon={Package} 
+          <TabButton id="add" label="Add Product" icon={Plus} />
+          <TabButton
+            id="list"
+            label="Product List"
+            icon={Package}
             count={singleshop_products?.length || 0}
           />
         </div>
 
         {/* Tab Content */}
-        {activeTab === 'add' && (
+        {activeTab === "add" && (
           <div className="bg-white rounded-xl shadow-sm p-8">
             <div className="flex items-center space-x-3 mb-6">
               <div className="p-2 bg-orange-100 rounded-lg">
                 <Plus className="text-orange-600" size={24} />
               </div>
-              <h2 className="text-2xl font-semibold text-gray-900">Add New Product</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">
+                Add New Product
+              </h2>
             </div>
 
             <div onSubmit={handleSubmit} className="space-y-6">
@@ -274,11 +286,16 @@ const Products = () => {
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 appearance-none cursor-pointer transition-colors"
                     >
                       <option value="">Select Category</option>
-                      {categories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    <ChevronDown
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+                      size={20}
+                    />
                   </div>
                 </div>
 
@@ -350,7 +367,10 @@ const Products = () => {
                       <option value="l">Liters (l)</option>
                       <option value="ml">Millilitre (ml)</option>
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                    <ChevronDown
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+                      size={20}
+                    />
                   </div>
                 </div>
               </div>
@@ -412,17 +432,23 @@ const Products = () => {
                       <Camera size={18} className="mr-2" />
                       Choose Images
                     </label>
-                    <p className="text-sm text-gray-500 mt-2">PNG, JPG up to 10MB each</p>
+                    <p className="text-sm text-gray-500 mt-2">
+                      PNG, JPG up to 10MB each
+                    </p>
                   </div>
                 </div>
 
                 {/* Upload Status */}
                 {firemsg && (
-                  <div className={`mt-3 p-3 rounded-lg ${
-                    uploadProgress ? 'bg-blue-50 text-blue-600' : 
-                    firemsg.includes('successful') ? 'bg-green-50 text-green-600' : 
-                    'bg-red-50 text-red-600'
-                  }`}>
+                  <div
+                    className={`mt-3 p-3 rounded-lg ${
+                      uploadProgress
+                        ? "bg-blue-50 text-blue-600"
+                        : firemsg.includes("successful")
+                          ? "bg-green-50 text-green-600"
+                          : "bg-red-50 text-red-600"
+                    }`}
+                  >
                     {firemsg}
                   </div>
                 )}
@@ -430,12 +456,14 @@ const Products = () => {
                 {/* Image Previews */}
                 {preview.length > 0 && (
                   <div className="mt-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-3">Preview Images:</h4>
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                      Preview Images:
+                    </h4>
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                       {preview.map((item, i) => (
                         <div key={i} className="relative group">
-                          <img 
-                            src={item} 
+                          <img
+                            src={item}
                             alt={`Preview ${i + 1}`}
                             className="w-full h-24 object-cover rounded-lg border border-gray-200"
                           />
@@ -461,14 +489,14 @@ const Products = () => {
                   disabled={uploadProgress}
                   className="px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
                 >
-                  {uploadProgress ? 'Processing...' : 'Add Product'}
+                  {uploadProgress ? "Processing..." : "Add Product"}
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {activeTab === 'list' && (
+        {activeTab === "list" && (
           <div className="bg-white rounded-xl shadow-sm">
             {/* List Header */}
             <div className="p-6 border-b border-gray-200">
@@ -478,15 +506,22 @@ const Products = () => {
                     <Package className="text-orange-600" size={24} />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-semibold text-gray-900">Product List</h2>
-                    <p className="text-sm text-gray-600">{filteredProducts?.length || 0} products found</p>
+                    <h2 className="text-2xl font-semibold text-gray-900">
+                      Product List
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                      {filteredProducts?.length || 0} products found
+                    </p>
                   </div>
                 </div>
 
                 {/* Search and Filter */}
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                    <Search
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
                     <input
                       type="text"
                       placeholder="Search products..."
@@ -496,18 +531,26 @@ const Products = () => {
                     />
                   </div>
                   <div className="relative">
-                    <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                    <Filter
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
                     <select
                       value={categoryFilter}
                       onChange={(e) => setCategoryFilter(e.target.value)}
                       className="pl-10 pr-8 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 appearance-none cursor-pointer w-full sm:w-48"
                     >
                       <option value="">All Categories</option>
-                      {categories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
+                    <ChevronDown
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+                      size={16}
+                    />
                   </div>
                 </div>
               </div>
@@ -518,14 +561,30 @@ const Products = () => {
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Image
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Product
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Category
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Quantity
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Price
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Stock
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Discount
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
@@ -540,8 +599,12 @@ const Products = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div>
-                          <div className="font-medium text-gray-900">{product?.product_name}</div>
-                          <div className="text-sm text-gray-500 truncate max-w-xs">{product?.description}</div>
+                          <div className="font-medium text-gray-900">
+                            {product?.product_name}
+                          </div>
+                          <div className="text-sm text-gray-500 truncate max-w-xs">
+                            {product?.description}
+                          </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -553,14 +616,20 @@ const Products = () => {
                         {product?.quantity} {product?.quantity_type}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm font-medium text-gray-900">₹{product?.price}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                          ₹{product?.price}
+                        </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                          product?.stocks > 10 ? 'bg-green-100 text-green-800' :
-                          product?.stocks > 0 ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-red-100 text-red-800'
-                        }`}>
+                        <span
+                          className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                            product?.stocks > 10
+                              ? "bg-green-100 text-green-800"
+                              : product?.stocks > 0
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
+                          }`}
+                        >
                           {product?.stocks} units
                         </span>
                       </td>
@@ -576,7 +645,9 @@ const Products = () => {
                             <Edit size={16} />
                           </button>
                           <button
-                            onClick={() => dispatch(asyncremoveproduct(product?._id))}
+                            onClick={() =>
+                              dispatch(asyncremoveproduct(product?._id))
+                            }
                             className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           >
                             <Trash2 size={16} />
@@ -592,13 +663,17 @@ const Products = () => {
               {filteredProducts?.length === 0 && (
                 <div className="text-center py-12">
                   <Package className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    No products found
+                  </h3>
                   <p className="text-gray-500 mb-4">
-                    {searchTerm || categoryFilter ? 'Try adjusting your search or filter criteria.' : 'Get started by adding your first product.'}
+                    {searchTerm || categoryFilter
+                      ? "Try adjusting your search or filter criteria."
+                      : "Get started by adding your first product."}
                   </p>
                   {!searchTerm && !categoryFilter && (
                     <button
-                      onClick={() => setActiveTab('add')}
+                      onClick={() => setActiveTab("add")}
                       className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
                     >
                       Add Your First Product

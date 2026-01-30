@@ -107,7 +107,7 @@ const ShopProduct = () => {
     if (id) {
       dispatch(asynsingleshopproducts(id));
     }
-  }, []);
+  }, [dispatch, id]);
   useEffect(() => {
     if (id) {
       setLoading(true);

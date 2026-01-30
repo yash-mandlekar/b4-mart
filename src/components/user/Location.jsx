@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { asyncsetLocation } from "../../store/userActions";
 
 const Location = () => {
-  const { location } = useSelector((state) => state.user);
+  useSelector((state) => state.user);
   const dispatch = useDispatch();
   // console.log(location);
   const handleChange = () => {
@@ -12,7 +12,9 @@ const Location = () => {
   };
   return (
     <div>
-      <button className="location-btn" onClick={handleChange}>Reset your address</button>
+      <button className="location-btn" onClick={handleChange}>
+        Reset your address
+      </button>
     </div>
   );
 };
