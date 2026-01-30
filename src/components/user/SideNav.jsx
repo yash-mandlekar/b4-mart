@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../../Css/Home.css";
-import { IoClose } from "react-icons/io5";
 
 import { Link, NavLink } from "react-router-dom";
 import Vector from "../../assets/Vector.svg";
-import Profile from "../../assets/profile.svg";
 import Notification from "../../assets/notification.svg";
-import search from "../../assets/search.svg";
 import cartlogo from "../../assets/cart.svg";
 import location from "../../assets/location.svg";
 import Location from "./Location";
@@ -22,7 +19,7 @@ const SideNav = () => {
 
   useEffect(() => {
     var count = 0;
-    cart.map((e) => {
+    cart.forEach((e) => {
       count += e.count;
     });
     setcounter(count);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   ArrowLeft,
   Minus,
@@ -26,30 +26,33 @@ const SingleProduct = () => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [selectedTab, setSelectedTab] = useState("description");
 
-  const getProduct = async (id) => {
-    try {
-      const { data } = await Axios.get(`/singleproduct/${id}`);
-      setSingleProduct(data.data);
-      console.log(cart);
-      var a = cart?.filter((e) => {
-        return e.product._id === data.data._id;
-      });
-      if (a[0]) {
-        setCount(a[0]?.count);
+  const getProduct = useCallback(
+    async (productId) => {
+      try {
+        const { data } = await Axios.get(`/singleproduct/${productId}`);
+        setSingleProduct(data.data);
+        console.log(cart);
+        var a = cart?.filter((e) => {
+          return e.product._id === data.data._id;
+        });
+        if (a[0]) {
+          setCount(a[0]?.count);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    },
+    [cart],
+  );
 
   const navigateImage = (direction) => {
     if (direction === "next") {
       setCurrentImageIndex((prev) =>
-        prev === singleProduct?.productpic?.length - 1 ? 0 : prev + 1
+        prev === singleProduct?.productpic?.length - 1 ? 0 : prev + 1,
       );
     } else {
       setCurrentImageIndex((prev) =>
-        prev === 0 ? singleProduct?.productpic?.length - 1 : prev - 1
+        prev === 0 ? singleProduct?.productpic?.length - 1 : prev - 1,
       );
     }
   };
@@ -82,7 +85,7 @@ const SingleProduct = () => {
     if (id) {
       getProduct(id);
     }
-  }, []);
+  }, [id, getProduct]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -93,7 +96,7 @@ const SingleProduct = () => {
             <button className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
               <ArrowLeft className="w-5 h-5" />
               <Link to="/products" className="text-sm">
-              <span className="font-medium">Back to Products</span>
+                <span className="font-medium">Back to Products</span>
               </Link>
             </button>
             <div className="flex items-center space-x-4">

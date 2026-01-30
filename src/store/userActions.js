@@ -35,7 +35,7 @@ export const asyncloaduser = () => async (dispatch) => {
   try {
     dispatch(setpageloading());
     const { data } = await Axios.get("/me");
-    
+
     if (data.success) {
       dispatch(loaduser(data.user));
       dispatch(updatecart(data.user.cart));
@@ -218,7 +218,7 @@ export const asyncupdateshoporders = () => async (dispatch) => {
 export const asyncupdateorderstatus = (id, orderStatus) => async (dispatch) => {
   try {
     dispatch(setloading());
-    const { data } = await Axios.put(`/admin/orders/${id}`, { orderStatus });
+    await Axios.put(`/admin/orders/${id}`, { orderStatus });
     dispatch(asyncupdateshoporders());
     dispatch(setloadingfalse());
   } catch (err) {
@@ -240,7 +240,7 @@ export const asyncsetLocation = (location) => async (dispatch) => {
     dispatch(setloading());
     dispatch(updatelocation(location));
     const { data } = await Axios.post("find_shop", location);
-    const profileupdate = await Axios.put("profileupdate", {
+    await Axios.put("profileupdate", {
       lat: location.latitude,
       lon: location.longitude,
     });
